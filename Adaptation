@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep  8 00:56:08 2018
+
+@author: Kowe
+"""
+
+#Speech adaption program 9/7 hackathon
+
+import speech_recognition as sr
+import nltk
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('punkt')
+
+# obtain audio from the microphone
+r = sr.Recognizer()
+with sr.Microphone() as source:
+   print("Please wait. Calibrating microphone...")  
+   # listen for 5 seconds and create the ambient noise energy level  
+   r.adjust_for_ambient_noise(source, duration=5)  
+   print("Say something!")
+   audio = r.listen(source)
+    
+try:
+    # for testing purposes, we're just using the default API key
+    # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+    # instead of `r.recognize_google(audio)`
+    print("Google Speech Recognition thinks you said: " + r.recognize_google(audio) + '\n')
+except sr.UnknownValueError:
+    print("Google Speech Recognition could not understand audio")
+except sr.RequestError as e:
+    print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+tokens = nltk.word_tokenize(r.recognize_google(audio))
+print("Parts of Speech: ", nltk.pos_tag(tokens), '\n')
+
