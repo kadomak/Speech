@@ -9,6 +9,7 @@ import nltk
 from math import *
 from bokeh import *
 
+#This function calls the microphone prompting the user to speak and tags the parts of speech
 def getData():
     # obtain audio from the microphone
     r = sr.Recognizer()
@@ -32,6 +33,7 @@ def getData():
     sentence = r.recognize_google(audio)
     return tuples, sentence
  
+#This function takes the tokens, determines the count, and returns table which the part of speech and its frequency
 def organizeData(tuples):
     #dictionary with the pos
     posDict = { 'CC': 0,'CD': 0,'DT': 0,'EX': 0, 'FW': 0,    
@@ -56,6 +58,7 @@ def organizeData(tuples):
     data = pd.Series(posDict).reset_index(name='value').rename(columns={'index':'part of speech'})
     return data
 
+#This function creates & displays the graph
 def createGraph(data,sentence):
     #graphing the results
     output_file("results.html")
