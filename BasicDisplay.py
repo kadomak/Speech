@@ -1,6 +1,8 @@
 """
 Created on Wed May 20 12:35:57 2020
 @author: Kowe
+This program allows a user to speak to their device and will display a graph with the parts of speech and their frequency.
+The title of the graph is the full sentence.
 """
 #importing appropriate libraries
 import speech_recognition as sr
@@ -33,7 +35,7 @@ def getData():
     sentence = r.recognize_google(audio)
     return tuples, sentence
  
-#This function takes the tokens, determines the count, and returns table which the part of speech and its frequency
+#This function takes the tokens, determines the count, and returns table which gives the part of speech and its frequency
 def organizeData(tuples):
     #dictionary with the pos
     posDict = { 'CC': 0,'CD': 0,'DT': 0,'EX': 0, 'FW': 0,    
@@ -95,7 +97,7 @@ def createGraph(data,sentence):
     show(p)
 
 #Main program
-pos,sent = getData()
+pos,sentence = getData()
 array = organizeData(pos)   
-createGraph(array,sent)
+createGraph(array,sentence)
 
